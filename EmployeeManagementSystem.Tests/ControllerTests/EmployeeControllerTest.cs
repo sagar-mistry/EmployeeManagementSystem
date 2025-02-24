@@ -30,7 +30,7 @@ namespace EmployeeManagementSystem.Tests.ControllerTests
             );
         }
 
-        // ✅ Test: GetEmployees returns 200 OK
+        // Test: GetEmployees returns 200 OK
         [Test]
         public async Task GetEmployees_ReturnsOk_WithEmployeeList()
         {
@@ -40,7 +40,7 @@ namespace EmployeeManagementSystem.Tests.ControllerTests
                 new EmployeeDTO { EmployeeNumber = 1, EmployeeName = "John Doe", HourlyRate = 30, HoursWorked = 40 },
                 new EmployeeDTO { EmployeeNumber = 2, EmployeeName = "Jane Smith", HourlyRate = 35, HoursWorked = 38 }
             };
-            _mockEmployeeService.Setup(s => s.GetEmployeesAsync(1, 50)).ReturnsAsync(employees);
+            _mockEmployeeService.Setup(s => s.GetEmployeesAsync(1, 2)).ReturnsAsync(employees);
 
             // Act
             var result = await _controller.GetEmployees();
@@ -52,7 +52,7 @@ namespace EmployeeManagementSystem.Tests.ControllerTests
             Assert.AreEqual(employees, okResult.Value);
         }
 
-        // ✅ Test: GetEmployee returns 200 OK
+        // Test: GetEmployee returns 200 OK
         [Test]
         public async Task GetEmployee_WithValidId_ReturnsOk()
         {
@@ -70,12 +70,12 @@ namespace EmployeeManagementSystem.Tests.ControllerTests
             Assert.AreEqual(employee, okResult.Value);
         }
 
-        // ✅ Test: GetEmployee returns 404 NotFound
+        // Test: GetEmployee returns 404 NotFound
         [Test]
         public async Task GetEmployee_WithInvalidId_ReturnsNotFound()
         {
             // Arrange
-            _mockEmployeeService.Setup(s => s.GetEmployeeByIdAsync(99)).ReturnsAsync((EmployeeDTO)null);
+            _mockEmployeeService.Setup(s => s.GetEmployeeByIdAsync(9999)).ReturnsAsync((EmployeeDTO)null);
 
             // Act
             var result = await _controller.GetEmployee(99);
@@ -84,7 +84,7 @@ namespace EmployeeManagementSystem.Tests.ControllerTests
             Assert.IsInstanceOf<NotFoundResult>(result.Result);
         }
 
-        // ✅ Test: SearchEmployees returns 200 OK with results
+        // Test: SearchEmployees returns 200 OK with results
         [Test]
         public async Task SearchEmployees_WithValidName_ReturnsOk()
         {
@@ -105,7 +105,7 @@ namespace EmployeeManagementSystem.Tests.ControllerTests
             Assert.AreEqual(employees, okResult.Value);
         }
 
-        // ✅ Test: SearchEmployees with empty name returns 400 BadRequest
+        // Test: SearchEmployees with empty name returns 400 BadRequest
         [Test]
         public async Task SearchEmployees_WithEmptyName_ReturnsBadRequest()
         {
@@ -118,7 +118,7 @@ namespace EmployeeManagementSystem.Tests.ControllerTests
             Assert.AreEqual(400, badRequestResult.StatusCode);
         }
 
-        // ✅ Test: CreateEmployee returns 201 Created
+        // Test: CreateEmployee returns 201 Created
         [Test]
         public async Task CreateEmployee_ValidInput_ReturnsCreated()
         {
@@ -135,7 +135,7 @@ namespace EmployeeManagementSystem.Tests.ControllerTests
             Assert.AreEqual(201, createdResult.StatusCode);
         }
 
-        // ✅ Test: UpdateEmployee returns 204 NoContent
+        // Test: UpdateEmployee returns 204 NoContent
         [Test]
         public async Task UpdateEmployee_ValidInput_ReturnsNoContent()
         {
@@ -150,7 +150,7 @@ namespace EmployeeManagementSystem.Tests.ControllerTests
             Assert.IsInstanceOf<NoContentResult>(result);
         }
 
-        // ✅ Test: UpdateEmployee with ID mismatch returns 400 BadRequest
+        // Test: UpdateEmployee with ID mismatch returns 400 BadRequest
         [Test]
         public async Task UpdateEmployee_IdMismatch_ReturnsBadRequest()
         {
@@ -166,7 +166,7 @@ namespace EmployeeManagementSystem.Tests.ControllerTests
             Assert.AreEqual(400, badRequestResult.StatusCode);
         }
 
-        // ✅ Test: DeleteEmployee returns 204 NoContent
+        // Test: DeleteEmployee returns 204 NoContent
         [Test]
         public async Task DeleteEmployee_ValidId_ReturnsNoContent()
         {
