@@ -1,4 +1,4 @@
-This coding exercise is given by RBC interviewer as a part of 3rd round.
+
 
 Assume that there is a table that will provide the details of employees (employee number, employee name, hourly rate and hours worked).
 
